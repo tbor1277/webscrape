@@ -35,7 +35,12 @@ for county in county_list:
     county_link = county_link_list[county]
     print('County Link: ' + county_link)
     second_html_page = simple_get(county_link)
-    #containers = second_html_page.find_all("th", {"style": "width: 50%;"})
-    #for container in containers:
-        #for link in column.find_all('a'):
-            #print(link.get('href'))
+    containers = second_html_page.find_all("th", {"style": "width: 50%;"})
+    for container in containers:
+        for link in container.find_all('a'):
+            third_link = link.get('href')
+            third_site = main_site + third_link[7:]
+            third_html_page = simple_get(third_site)
+            store_address = third_html_page.address.text
+            print('Store Adress: ' + store_address) 
+            print('Store link: ' + third_site)
