@@ -12,6 +12,10 @@ def simple_get(url):
     else:
         return soup(res.text, 'html.parser')
 
+def link_merge(link_two):
+    half_link = link_two
+    return main_site + half_link[7:]
+
 
 main_site = 'https://www.bmstores.co.uk/stores'
 html_page = simple_get(main_site)
@@ -24,8 +28,7 @@ for column in columns[0:3]:
         county_name = county
         county_list = county_list + [county_name]
     for a in column.find_all('a', href=True):
-        second_site = main_site + a["href"]
-        second_site = main_site + second_link[7:]
+        second_site = link_merge(a["href"])
         second_site_list = second_site_list + [second_site]
 
 
@@ -39,8 +42,7 @@ for county in county_list:
     containers = second_html_page.find_all("th", {"style": "width: 50%;"})
     for container in containers:
         for link in container.find_all('a'):
-            third_link = link.get('href')
-            third_site = main_site + third_link[7:]
+            third_site = link_merge(link.get('href'))
             third_html_page = simple_get(third_site)
             store_address = third_html_page.address.text
             print('Store Adress: ' + store_address) 
