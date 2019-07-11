@@ -25,6 +25,7 @@ for column in columns[0:3]:
         county_list = county_list + [county_name]
     for a in column.find_all('a', href=True):
         second_site = main_site + a["href"]
+        second_site = main_site + second_link[7:]
         second_site_list = second_site_list + [second_site]
 
 
